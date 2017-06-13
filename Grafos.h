@@ -9,3 +9,11 @@ typedef struct grafo {
 	TViz *viz;
 	struct grafo *prox;
 }TG;
+
+TG *insereNo(TG *g, int no);
+TG *buscaNo(TG *g, int no);
+void *retiraNo(TG *g, int no);
+TG *insereNo(TG *g, int no);
+TViz *buscaAresta(TG *g, int no, int no2);
+void *retiraAresta(TG *g, int no, int no2);
+
