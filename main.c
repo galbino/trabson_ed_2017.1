@@ -41,7 +41,7 @@ void opcao(int opcao, TG *grafo){
 			printf("programa finalizado\n");
 			break;
 		case 1:
-			imprime(grafo);
+			imprimeGrafo(grafo);
 			break;
 		case 2:
 			printf("\n\nAdicionar nó:\n \tdigite a informção do nó: ");
@@ -54,7 +54,7 @@ void opcao(int opcao, TG *grafo){
 			grafo = retiraNo(grafo, info);
 			break;
 		case 4:
-			prinf("\n\nBuscar nó:\n \tdigite a informação do nó: ");
+			printf("\n\nBuscar nó:\n \tdigite a informação do nó: ");
 			scanf("%d", info);
 			imprimeNo(buscaNo(grafo, info));
 			break;
@@ -73,7 +73,7 @@ void opcao(int opcao, TG *grafo){
 			}
 			printf("\n \tdigite o custo da aresta: ");
 			scanf("%d",&custo);
-			insereAresta(grafo, info, destino);
+			//insereAresta(grafo, info, destino);
 			break;
 		case 6:
 			printf("\n\nRetira aresta:\n \tdigita o nó de onde sai a aresta: ");
@@ -105,7 +105,7 @@ void opcao(int opcao, TG *grafo){
 			}
 			imprimeAresta(buscaAresta(grafo, info, destino));
 			break;
-		caso 8:
+		case 8:
 			printf("\n\nCarregando arquivo\n");
 			grafo = carregaArquivo();
 			break;
