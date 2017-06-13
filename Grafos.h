@@ -10,6 +10,7 @@ typedef struct grafo {
 	struct grafo *prox;
 }TG;
 
+TG *inicializa(void);
 TG *insereNo(TG *g, int no);
 TG *buscaNo(TG *g, int no);
 void retiraNo(TG *g, int no);
@@ -18,4 +19,5 @@ void insereAresta(TG *g, int no1, int no2);
 TViz *buscaAresta(TG *g, int no1, int no2);
 void retiraArestaUmSentido(TG *g, int no1, int no2);
 void retiraAresta(TG *g, int no1, int no2);
+void imprime(TG *g);
 
