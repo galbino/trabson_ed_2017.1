@@ -19,5 +19,7 @@ void insereAresta(TG *g, int no1, int no2);
 TViz *buscaAresta(TG *g, int no1, int no2);
 void retiraArestaUmSentido(TG *g, int no1, int no2);
 void retiraAresta(TG *g, int no1, int no2);
-void imprime(TG *g);
+void imprimeGrafo(TG *g);
+void imprimeNo(TG *g);
+void imprimeAresta(TG *g);
 
