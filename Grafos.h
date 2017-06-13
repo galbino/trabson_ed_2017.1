@@ -8,4 +8,5 @@ typedef struct grafo {
 	int id_grafo;
 	TViz *viz;
 	struct grafo *prox;
-};
+}TG;
+
