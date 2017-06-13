@@ -9,4 +9,3 @@ typedef struct grafo {
 	TViz *viz;
 	struct grafo *prox;
 }TG;
-
