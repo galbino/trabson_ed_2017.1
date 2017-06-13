@@ -12,8 +12,10 @@ typedef struct grafo {
 
 TG *insereNo(TG *g, int no);
 TG *buscaNo(TG *g, int no);
-void *retiraNo(TG *g, int no);
-TG *insereNo(TG *g, int no);
-TViz *buscaAresta(TG *g, int no, int no2);
-void *retiraAresta(TG *g, int no, int no2);
+void retiraNo(TG *g, int no);
+void insereArestaUmSentido(TG *g, int no1, int no2);
+void insereAresta(TG *g, int no1, int no2);
+TViz *buscaAresta(TG *g, int no1, int no2);
+void retiraArestaUmSentido(TG *g, int no1, int no2);
+void retiraAresta(TG *g, int no1, int no2);
 
