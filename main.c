@@ -1,4 +1,4 @@
-#include "Grafos.h"
+#include "grafos.h"
 #include <stdio.h>
 
 int menu(void);
