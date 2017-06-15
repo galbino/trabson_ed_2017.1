@@ -116,7 +116,7 @@ TG *opcao(int opcao, TG *grafo){
 			grafo = carregaArquivo(grafo);
 			break;
 		case 9:
-			printf("\n\nColorindo grafo");
+			printf("\nColorindo grafo\n");
 			grafo = pintaGrafo(grafo, grafo, contaNos(grafo));
 			break;
 		default:
@@ -133,7 +133,7 @@ TG *carregaArquivo(TG *grafo){
 		fscanf(arq,"%d", &qtdNo);
 		printf("\nQuantidade de nos: %d\n", qtdNo);
 		int i;
-		for(i = 1; i <= qtdNo ; i++){
+		for(i = qtdNo; i > 0 ; i--){
 			grafo = insereNo(grafo, i);
 		}
 		

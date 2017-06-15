@@ -17,6 +17,7 @@ TG *insereNo(TG *g, int no) {
 	p->id_grafo = no;
 	p->cor = 0;
 	p->viz = NULL;
+	p->ant = NULL;
 	p->prox = g;
 	if (g) g->ant = p;
 	return p;
@@ -66,7 +67,10 @@ void imprimeAresta(TViz *ar){
 void imprimeNo(TG *g) {
 	if (!g) return;
 	TViz *ar = g->viz;
-	printf("\nNo: %d \tCor: %d\n", g->id_grafo, g->cor);
+	printf("No: %d \tCor: %d\n", g->id_grafo, g->cor);
+	if(!ar){
+		printf("Este no nao possui arestas\n");
+	}
 	while (ar){
 		imprimeAresta(ar);
 		ar = ar->prox_viz;
@@ -100,9 +104,9 @@ TG *pintaGrafo(TG *grafo, TG *grafoAux, int qtdNos){
 	if(!grafo){
 		return grafo;
 	}
-	if(grafoAux->prox){
+	if(grafoAux){
 		int i;
-		for(i = 1; i <= qtdNos; i++){
+		for(i = 1; i <= qtdNos + 1; i++){
 			grafoAux->cor = i;
 			if(semConflito(grafoAux, i)){
 				return pintaGrafo(grafo, grafoAux->prox, qtdNos);
@@ -121,7 +125,7 @@ int semConflito(TG *grafo, int cor){
 	while(aresta){
 		if (aresta->id != grafo->id_grafo){ // Evita nós que estão apontando pra si mesmo
 			TG *noAux = buscaNo(grafo, aresta->id);
-			if (noAux->cor == cor){
+			if (noAux && noAux->cor == cor){
 				return 0;
 			}
 		}
