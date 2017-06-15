@@ -129,9 +129,9 @@ int semConflito(TG *grafo, int cor){
 	}
 	TG *grafoAux = grafo;
 	while(grafoAux){
-		TViz *arestaAux = grafoAux->viz;
-		while(arestaAux){
-			if(arestaAux->id == grafo->id_grafo && grafoAux->cor == grafo->cor){
+		TViz *aresta = grafoAux->viz;
+		while(aresta){
+			if(aresta->id == grafo->id_grafo && grafoAux->cor == grafo->cor){
 				return 0;
 			}
 			aresta = aresta->prox_viz;
