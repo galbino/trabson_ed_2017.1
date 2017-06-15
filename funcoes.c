@@ -3,9 +3,12 @@
 #include <stdio.h>
 
 TG *buscaNo (TG *g, int no) {
-	if (!g) return g;
-	if (g->id_grafo == no) return g;
-	buscaNo(g->prox, no);
+	if (!g) return NULL;
+	TG *p = g;
+	while (p && p->id_grafo != no) {
+		p = p->prox;
+	}
+	return p;
 }
 TG *insereNo(TG *g, int no) {
 	TG *p = buscaNo(g, no);
