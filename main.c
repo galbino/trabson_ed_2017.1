@@ -28,7 +28,10 @@ int menu(){
 	printf("5 - adcionar aresta\n");
 	printf("6 - retirar aresta\n");	
 	printf("7 - busca aresta\n");
-	printf("8 - carrega arquivo\n");	
+	printf("8 - carrega arquivo\n");
+	printf("----\nSelecione uma opção\n");
+	scanf("%d", &opt);
+	return opt;
 }
 
 void opcao(int opcao, TG *grafo){
@@ -42,6 +45,8 @@ void opcao(int opcao, TG *grafo){
 			break;
 		case 1:
 			imprimeGrafo(grafo);
+			printf("\n\nPressione enter para voltar ao menu");
+			getchar();
 			break;
 		case 2:
 			printf("\n\nAdicionar nó:\n \tdigite a informção do nó: ");
@@ -73,7 +78,7 @@ void opcao(int opcao, TG *grafo){
 			}
 			printf("\n \tdigite o custo da aresta: ");
 			scanf("%d",&custo);
-			//insereAresta(grafo, info, destino);
+			insereAresta(grafo, info, destino);
 			break;
 		case 6:
 			printf("\n\nRetira aresta:\n \tdigita o nó de onde sai a aresta: ");
@@ -109,6 +114,37 @@ void opcao(int opcao, TG *grafo){
 			printf("\n\nCarregando arquivo\n");
 			grafo = carregaArquivo();
 			break;
+		default:
+			printf("\nOpção não encontrada");
+			break;
+	}
+	
+	TG *carregaArquivo(){
+		TG *grafoAux = NULL;
+		FILE *arq = fopen("exemplo_EDI.txt", "r");
+		if (arq != NULL){
+			int qtdNo;
+			fscanf(arq,"%d", &qtdNo);
+			int i;
+			for(i = 1; i <= qtdNo ; i++){
+				grafoAux = insereNo(grafoAux, i);
+			}
+			
+			while(!feof(arq)){
+				int origem;
+				int destino;
+				
+				fscanf(arq,"%d %d", &origem, &destino);
+				insereAresta(grafoAux, origem, destino);
+			}
+			
+			
+			fclose(arq);
+		} else {
+			printf("\nErro ao tentar abrir o arquivo");
+		}
+		
+		return grafoAux;
 	}
 }
 
