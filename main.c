@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 int menu(void);
-void opcao(int opcao, TG *grafo);
+TG *opcao(int opcao, TG *grafo);
 void carregaArquivo(TG *grafo);
 
 int main(void){
@@ -11,7 +11,8 @@ int main(void){
 	do
 	{
 		escolha = menu();
-		opcao(escolha, grafo);
+		grafo = opcao(escolha, grafo);
+		
 	}while(escolha);
 	
 	return 0;
@@ -35,7 +36,7 @@ int menu(){
 	return opt;
 }
 
-void opcao(int opcao, TG *grafo){
+TG *opcao(int opcao, TG *grafo){
 	int info;
 	int destino;
 	int custo;	
@@ -125,6 +126,7 @@ void opcao(int opcao, TG *grafo){
 			printf("\nOpcao não encontrada");
 			break;
 	}
+	return grafo;
 }
 
 void carregaArquivo(TG *grafo){

@@ -66,6 +66,7 @@ void imprimeAresta(TViz *ar){
 void imprimeNo(TG *g) {
 	if (!g) return;
 	TViz *ar = g->viz;
+	printf("\nNo: %d \tCor: %d\n", g->id_grafo, g->cor);
 	while (ar){
 		imprimeAresta(ar);
 		ar = ar->prox_viz;
@@ -107,6 +108,7 @@ void pintaGrafo(TG *grafo, TG *grafoAux, int qtdNos){
 		}
 	} else {
 		imprimeGrafo(grafo);
+		printf("\nGrafo pintado");
 	}
 }
 
