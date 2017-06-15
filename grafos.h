@@ -7,6 +7,7 @@ typedef struct viz {
 
 typedef struct grafo {
 	int id_grafo;
+	int cor;
 	TViz *viz;
 	struct grafo *prox;
 	struct grafo *ant;
@@ -24,3 +25,6 @@ void imprimeNo(TG *g);
 void imprimeGrafo(TG *g);
 void liberaNo(TG *g, TG *p);
 void libera(TG *g);
+void pintaGrafo(TG *grafo, TG *grafoAux, int qtdNos);
+int semConflito(TG *grafo, int cor);
+int contaNos(TG *grafo);

@@ -12,6 +12,7 @@ TG *insereNo(TG *g, int no) {
 	if (p) return g;
 	p = (TG *) malloc(sizeof(TG));
 	p->id_grafo = no;
+	p->cor = 0;
 	p->viz = NULL;
 	p->prox = g;
 	if (g) g->ant = p;
@@ -90,3 +91,59 @@ void libera(TG *g){
 	retiraNo(g, g->id_grafo);
 	libera(g->prox);
 }
+
+void pintaGrafo(TG *grafo, TG *grafoAux, int qtdNos){
+	if(grafoAux){
+		int i;
+		for(i = 1; i <= qtdNos; i++){
+			grafoAux->cor = i;
+			if(semConflito(grafo, i)){
+				pintaGrafo(grafo, grafoAux->prox, qtdNos);
+			}
+			grafoAux->cor = 0;
+		}
+	} else {
+		imprimeGrafo(grafo);
+	}
+}
+
+int semConflito(TG *grafo, int cor){
+	if (!grafo->viz){ 
+		return 1;
+	} else {
+		TViz *aresta = grafo->viz;
+		while(aresta){
+			if (aresta->id != grafo->id_grafo){ // Evita nós que estão apontando pra si mesmo
+				TG *noAux = buscaNo(grafo, aresta->id);
+				if (noAux->cor == cor){
+					return 0;
+				}
+			}
+			aresta = aresta->prox_viz;
+		}
+	}
+	return 1;
+}
+
+int contaNos(TG *grafo){
+	TG *grafoAux = grafo;
+	int qtdNos;
+	while(grafoAux){
+		qtdNos ++;
+		grafoAux = grafoAux->prox;
+	}
+	return qtdNos;	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

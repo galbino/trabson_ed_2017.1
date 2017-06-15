@@ -29,6 +29,7 @@ int menu(){
 	printf("6 - retirar aresta\n");	
 	printf("7 - busca aresta\n");
 	printf("8 - carrega arquivo\n");
+	printf("9 - pintar grafo\n");
 	printf("----\nSelecione uma opcao\n");
 	scanf("%d", &opt);
 	return opt;
@@ -115,6 +116,10 @@ void opcao(int opcao, TG *grafo){
 		case 8:
 			printf("\n\nCarregando arquivo\n");
 			grafo = carregaArquivo();
+			break;
+		case 9:
+			printf("\n\nColorindo grafo");
+			pintaGrafo(grafo, grafo, contaNos(grafo));
 			break;
 		default:
 			printf("\nOpcao não encontrada");
