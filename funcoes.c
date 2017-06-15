@@ -27,7 +27,7 @@ TViz *buscaAresta(TG *g, int no1, int no2) {
 	TG *p = buscaNo(g, no1);
 	if (!p) return NULL;
 	TViz *viz = p->viz;
-	while (viz->id != no2 && viz) {
+	while (viz && viz->id != no2) {
 		viz = viz->prox_viz;
 	}
 	return viz;
@@ -42,7 +42,7 @@ void insereAresta(TG *g, int no1, int no2){
 	novaAresta->prox_viz = p->viz;
 	novaAresta->viz_ant = NULL;
 	novaAresta->id_pai = p->id_grafo;
-	p->viz->viz_ant = novaAresta;
+	if (p->viz) p->viz->viz_ant = novaAresta;
 	p->viz = novaAresta;
 }
 void retiraAresta(TG *g, int no1, int no2) {
