@@ -115,7 +115,7 @@ TG *pintaGrafo(TG *grafo, TG *grafoAux, int qtdNos){
 		}
 	} else {
 		imprimeGrafo(grafo);
-		printf("\nGrafo pintado");
+		printf("\nGrafo pintado:");
 		return grafo;
 	}
 }
