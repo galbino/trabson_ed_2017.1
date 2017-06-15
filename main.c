@@ -118,8 +118,8 @@ void opcao(int opcao, TG *grafo){
 			printf("\nOpção não encontrada");
 			break;
 	}
-	
-	TG *carregaArquivo(){
+}
+TG *carregaArquivo(){
 		TG *grafoAux = NULL;
 		FILE *arq = fopen("exemplo_EDI.txt", "r");
 		if (arq != NULL){
@@ -145,7 +145,6 @@ void opcao(int opcao, TG *grafo){
 		}
 		
 		return grafoAux;
-	}
 }
 
 
