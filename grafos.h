@@ -25,6 +25,7 @@ void imprimeNo(TG *g);
 void imprimeGrafo(TG *g);
 void liberaNo(TG *g, TG *p);
 void libera(TG *g);
-void pintaGrafo(TG *grafo, TG *grafoAux, int qtdNos);
+
+TG *pintaGrafo(TG *grafo, TG *grafoAux, int qtdNos);
 int semConflito(TG *grafo, int cor);
 int contaNos(TG *grafo);

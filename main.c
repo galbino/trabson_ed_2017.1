@@ -39,7 +39,6 @@ int menu(){
 TG *opcao(int opcao, TG *grafo){
 	int info;
 	int destino;
-	int custo;	
 	
 	switch(opcao){
 		case 0:
@@ -80,8 +79,6 @@ TG *opcao(int opcao, TG *grafo){
 				printf("\n\nDesculpe, o no digitado nao foi encontrado =/");
 				break;
 			}
-			printf("\n \tdigite o custo da aresta: ");
-			scanf("%d",&custo);
 			insereAresta(grafo, info, destino);
 			break;
 		case 6:
@@ -120,7 +117,7 @@ TG *opcao(int opcao, TG *grafo){
 			break;
 		case 9:
 			printf("\n\nColorindo grafo");
-			pintaGrafo(grafo, grafo, contaNos(grafo));
+			grafo = pintaGrafo(grafo, grafo, contaNos(grafo));
 			break;
 		default:
 			printf("\nOpcao não encontrada");

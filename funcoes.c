@@ -96,37 +96,49 @@ void libera(TG *g){
 	libera(g->prox);
 }
 
-void pintaGrafo(TG *grafo, TG *grafoAux, int qtdNos){
-	if(grafoAux){
+TG *pintaGrafo(TG *grafo, TG *grafoAux, int qtdNos){
+	if(!grafo){
+		return grafo;
+	}
+	if(grafoAux->prox){
 		int i;
 		for(i = 1; i <= qtdNos; i++){
 			grafoAux->cor = i;
-			if(semConflito(grafo, i)){
-				pintaGrafo(grafo, grafoAux->prox, qtdNos);
+			if(semConflito(grafoAux, i)){
+				return pintaGrafo(grafo, grafoAux->prox, qtdNos);
 			}
 			grafoAux->cor = 0;
 		}
 	} else {
 		imprimeGrafo(grafo);
 		printf("\nGrafo pintado");
+		return grafo;
 	}
 }
 
 int semConflito(TG *grafo, int cor){
-	if (!grafo->viz){ 
-		return 1;
-	} else {
-		TViz *aresta = grafo->viz;
-		while(aresta){
-			if (aresta->id != grafo->id_grafo){ // Evita nós que estão apontando pra si mesmo
-				TG *noAux = buscaNo(grafo, aresta->id);
-				if (noAux->cor == cor){
-					return 0;
-				}
+	TViz *aresta = grafo->viz;
+	while(aresta){
+		if (aresta->id != grafo->id_grafo){ // Evita nós que estão apontando pra si mesmo
+			TG *noAux = buscaNo(grafo, aresta->id);
+			if (noAux->cor == cor){
+				return 0;
+			}
+		}
+		aresta = aresta->prox_viz;
+	}
+	TG *grafoAux = grafo;
+	while(grafoAux){
+		TViz *arestaAux = grafoAux->viz;
+		while(arestaAux){
+			if(arestaAux->id == grafo->id_grafo && grafoAux->cor == grafo->cor){
+				return 0;
 			}
 			aresta = aresta->prox_viz;
 		}
+		grafoAux = grafoAux->ant;
 	}
+	
 	return 1;
 }
 
