@@ -1,6 +1,5 @@
 typedef struct viz {
 	int id;
-	int custo;
 	int id_pai;
 	struct viz *prox_viz;
 	struct viz *viz_ant;
