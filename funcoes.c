@@ -14,6 +14,7 @@ TG *insereNo(TG *g, int no) {
 	p->id_grafo = no;
 	p->viz = NULL;
 	p->prox = g;
+	if (g) g->ant = p;
 	return p;
 }
 TG *retiraNo(TG *g, int no){
@@ -59,8 +60,9 @@ void imprimeAresta(TViz *ar){
 	printf("%d -> %d\n", ar->id_pai, ar->id);
 }
 void imprimeNo(TG *g) {
+	if (!g) return;
 	TViz *ar = g->viz;
-	while (g && ar){
+	while (ar){
 		imprimeAresta(ar);
 		ar = ar->prox_viz;
 	}
