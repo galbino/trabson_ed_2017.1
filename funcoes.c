@@ -61,7 +61,7 @@ void retiraArestaAmbosSentidos(TG *g, int no1, int no2){
 	retiraAresta(g, no2, no1);
 }
 void imprimeAresta(TViz *ar){
-	printf("%d -> %d\n", ar->id_pai, ar->id);
+	printf("\t%d -> %d\n", ar->id_pai, ar->id);
 }
 void imprimeNo(TG *g) {
 	if (!g) return;
