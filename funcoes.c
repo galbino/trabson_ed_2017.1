@@ -27,7 +27,7 @@ TViz *buscaAresta(TG *g, int no1, int no2) {
 	TG *p = buscaNo(g, no1);
 	if (!p) return NULL;
 	TViz *viz = p->viz;
-	while (viz->id != no2) {
+	while (viz->id != no2 && viz) {
 		viz = viz->prox_viz;
 	}
 	return viz;
