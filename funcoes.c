@@ -108,7 +108,7 @@ TG *pintaGrafo(TG *grafo, TG *grafoAux, int qtdNos){
 		int i;
 		for(i = 1; i <= qtdNos + 1; i++){
 			grafoAux->cor = i;
-			if(semConflito(grafoAux, i)){
+			if(semConflito(grafo, grafoAux, i)){
 				return pintaGrafo(grafo, grafoAux->prox, qtdNos);
 			}
 			grafoAux->cor = 0;
@@ -120,11 +120,11 @@ TG *pintaGrafo(TG *grafo, TG *grafoAux, int qtdNos){
 	}
 }
 
-int semConflito(TG *grafo, int cor){
+int semConflito(TG *grafoInicio, TG *grafo, int cor){
 	TViz *aresta = grafo->viz;
 	while(aresta){
 		if (aresta->id != grafo->id_grafo){ // Evita nós que estão apontando pra si mesmo
-			TG *noAux = buscaNo(grafo, aresta->id);
+			TG *noAux = buscaNo(grafoInicio, aresta->id);
 			if (noAux && noAux->cor == cor){
 				return 0;
 			}
