@@ -16,7 +16,7 @@ TG *buscaNo(TG *g, int no);
 TG *insereNo(TG *g, int no);
 TG *retiraNo(TG *g, int no);
 TViz *buscaAresta(TG *g, int no1, int no2);	
-void insereAresta(TG *g, int custo, int no1, int no2);
+void insereAresta(TG *g, int no1, int no2);
 void retiraAresta(TG *g, int no1, int no2);
 void retiraArestaAmbosSentidos(TG *g, int no1, int no2);
 void imprimeAresta(TViz *aresta);

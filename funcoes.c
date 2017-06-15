@@ -32,13 +32,12 @@ TViz *buscaAresta(TG *g, int no1, int no2) {
 	}
 	return viz;
 }
-void insereAresta(TG *g, int custo, int no1, int no2){
+void insereAresta(TG *g, int no1, int no2){
 	TViz *t = buscaAresta(g, no1, no2);
 	if (t) return;
 	TG *p = buscaNo(g, no1);
 	if (!p) return;
 	TViz *novaAresta = (TViz *) malloc (sizeof(TViz));
-	novaAresta->custo = custo;
 	novaAresta->id = no2;
 	novaAresta->prox_viz = p->viz;
 	novaAresta->viz_ant = NULL;
