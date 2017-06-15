@@ -25,9 +25,10 @@ TG *insereNo(TG *g, int no) {
 TG *retiraNo(TG *g, int no){
 	TG *p = buscaNo(g, no);
 	if (!p) return g;
-	p->ant->prox = p->prox;
-	p->prox->ant = p->ant;
+	if (p->ant) p->ant->prox = p->prox;
+	if (p->prox) p->prox->ant = p->ant;
 	liberaNo(g, p);
+	return g;
 }
 TViz *buscaAresta(TG *g, int no1, int no2) {
 	TG *p = buscaNo(g, no1);
@@ -54,8 +55,8 @@ void insereAresta(TG *g, int no1, int no2){
 void retiraAresta(TG *g, int no1, int no2) {
 	TViz *ar = buscaAresta(g, no1, no2);
 	if(!ar) return;
-	ar->viz_ant->prox_viz = ar->prox_viz;
-	ar->prox_viz->viz_ant = ar->viz_ant;
+	if (ar->viz_ant) ar->viz_ant->prox_viz = ar->prox_viz;
+	if (ar->prox_viz) ar->prox_viz->viz_ant = ar->viz_ant;
 }
 void retiraArestaAmbosSentidos(TG *g, int no1, int no2){
 	retiraAresta(g, no1, no2);
