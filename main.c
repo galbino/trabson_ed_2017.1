@@ -3,7 +3,7 @@
 
 int menu(void);
 TG *opcao(int opcao, TG *grafo);
-void carregaArquivo(TG *grafo);
+TG *carregaArquivo(TG *grafo);
 
 int main(void){
 	int escolha;
@@ -116,7 +116,7 @@ TG *opcao(int opcao, TG *grafo){
 			break;
 		case 8:
 			printf("\n\nCarregando arquivo\n");
-			carregaArquivo(grafo);
+			grafo = carregaArquivo(grafo);
 			break;
 		case 9:
 			printf("\n\nColorindo grafo");
@@ -129,32 +129,32 @@ TG *opcao(int opcao, TG *grafo){
 	return grafo;
 }
 
-void carregaArquivo(TG *grafo){
-		FILE *arq = fopen("exemplo_EDI.txt", "r");
-		if (arq != NULL){
-			int qtdNo;
-			fscanf(arq,"%d", &qtdNo);
-			printf("\nQuantidade de nos: %d\n", qtdNo);
-			int i;
-			for(i = 1; i <= qtdNo ; i++){
-				grafo = insereNo(grafo, i);
-			}
-			
-			while(!feof(arq)){
-				int origem;
-				int destino;
-				
-				fscanf(arq,"%d%d", &origem, &destino);
-				printf("origem: %d ; destino: %d\n", origem, destino);
-				insereAresta(grafo, origem, destino);
-			}
-			
-			
-			fclose(arq);
-		} else {
-			printf("\nErro ao tentar abrir o arquivo");
+TG *carregaArquivo(TG *grafo){
+	FILE *arq = fopen("exemplo_EDI.txt", "r");
+	if (arq != NULL){
+		int qtdNo;
+		fscanf(arq,"%d", &qtdNo);
+		printf("\nQuantidade de nos: %d\n", qtdNo);
+		int i;
+		for(i = 1; i <= qtdNo ; i++){
+			grafo = insereNo(grafo, i);
 		}
 		
+		while(!feof(arq)){
+			int origem;
+			int destino;
+			
+			fscanf(arq,"%d%d", &origem, &destino);
+			printf("origem: %d ; destino: %d\n", origem, destino);
+			insereAresta(grafo, origem, destino);
+		}
+		
+		
+		fclose(arq);
+	} else {
+		printf("\nErro ao tentar abrir o arquivo");
+	}
+	return grafo;
 }
 
 
