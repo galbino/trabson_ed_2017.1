@@ -19,6 +19,9 @@ TG *insereNo(TG *g, int no) {
 	p->viz = NULL;
 	p->ant = NULL;
 	p->prox = g;
+	
+	p->jaPassou = 0;
+	
 	if (g) g->ant = p;
 	return p;
 }
@@ -187,8 +190,57 @@ int bothWays(TG *grafoInicio, TG *grafo){
 	return bothWays(grafoInicio, grafo->prox);
 }
 
+int procuraCaminho(TG *grafoInicio, TG *grafo, int destino){
+	if(grafo->id_grafo == destino){
+		return 1;
+	}
+	grafo->jaPassou = 1;
+	TViz *aresta = grafo->viz;
+	while(aresta){
+		if(!buscaNo(grafoInicio, aresta->id)->jaPassou){
+			return procuraCaminho(grafoInicio, buscaNo(grafoInicio, aresta->id), destino);
+		}
+		aresta = aresta->prox_viz;		
+	}
+	grafo->jaPassou = 0;
+	return 0;
+}
 
+void pintarGrafoDesconexos(TG *grafoInicio){
+	TG *grafoPercorre = grafoInicio;
+	TG *grafoAux = grafoInicio;
+	resetaCores(grafoInicio);
+	
+	int cor = 1;
+	while(grafoAux){
+		
+		int achou = 0;
+		while(grafoPercorre){
+			if(grafoPercorre->cor){
+				if(procuraCaminho(grafoInicio, buscaNo(grafoInicio, grafoPercorre->id_grafo), grafoAux->id_grafo)) {
+					grafoAux->cor = grafoPercorre->cor;
+					achou = 1;
+				}
+			}				
+			grafoPercorre = grafoPercorre->prox;
+		}
+		if(!achou){
+			grafoAux->cor = cor;
+			cor++;
+		}
+		
+		grafoPercorre = grafoInicio;
+		grafoAux = grafoAux->prox;
+	}
+}
 
+void resetaCores(TG *grafoInicio){
+	TG *grafoAux = grafoInicio;
+	while(grafoAux){
+		grafoAux->cor = 0;
+		grafoAux = grafoAux->prox;
+	}
+}
 
 
 

@@ -120,6 +120,17 @@ TG *opcao(int opcao, TG *grafo){
 			} else {
 				printf("\nO grafo e orientado\n");
 			}
+			pintarGrafoDesconexos(grafo);
+			break;
+		case 9:
+			printf("\n\nAdicionar no:\n \tdigite a informcao do no: ");
+			scanf("%d", &info);
+			printf("\n\nAdicionar no:\n \tdigite a informcao do no: ");
+			scanf("%d", &destino);
+			if(procuraCaminho(grafo, buscaNo(grafo, info), destino)){
+				printf("\nCaminho encontrado");
+			}
+			break;
 		default:
 			printf("\nOpcao nao encontrada");
 			break;

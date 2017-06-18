@@ -6,6 +6,7 @@ typedef struct viz {
 }TViz;
 
 typedef struct grafo {
+	int jaPassou;
 	int id_grafo;
 	int cor;
 	TViz *viz;
@@ -32,3 +33,7 @@ int semConflito(TG *grafoInicio, TG *grafo, int cor);
 int contaNos(TG *grafo);
 
 int bothWays(TG *grafoInicio, TG *grafo);
+
+int procuraCaminho(TG *grafoInicio, TG *grafo, int destino);
+void pintarGrafoDesconexos(TG *grafoInicio);
+void resetaCores(TG *grafoInicio);
