@@ -119,7 +119,7 @@ TG *opcao(int opcao, TG *grafo){
 				printf("\nO grafo e nao orientado\n");
 			} else {
 				printf("\nO grafo e orientado\n");
-			} 
+			}
 		default:
 			printf("\nOpcao nao encontrada");
 			break;

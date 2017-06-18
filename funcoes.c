@@ -66,6 +66,11 @@ void retiraAresta(TG *g, int no1, int no2) {
 	if (ar->prox_viz) ar->prox_viz->viz_ant = ar->viz_ant;
 	free(ar);
 }
+void removeArestaConectada(TG *g, int no) {
+	if (!g) return;
+	retiraAresta(g, g->id_grafo, no);
+	removeArestaConectada(g->prox, no);
+}
 void retiraArestaAmbosSentidos(TG *g, int no1, int no2){
 	printf("%d %d\n", no1, no2);
 	retiraAresta(g, no1, no2);
@@ -95,10 +100,14 @@ void imprimeGrafo(TG *g){
 }
 void liberaNo(TG *g, TG *p) {
 	TViz *ant = p->viz, *prox;
-	while (ant) {
+	if (!ant) {
+		removeArestaConectada(g, p->id_grafo);
+	} else {
+		while (ant) {
 		prox = ant->prox_viz;
 		retiraArestaAmbosSentidos(g, p->id_grafo, ant->id);
 		ant = prox;
+		}
 	}
 	free(p);
 }
