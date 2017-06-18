@@ -53,6 +53,10 @@ void insereAresta(TG *g, int no1, int no2){
 	if (p->viz) p->viz->viz_ant = novaAresta;
 	p->viz = novaAresta;
 }
+void insereArestaAmbosSentidos(TG *g, int no1, int no2){
+	insereAresta(g, no1, no2);
+	insereAresta(g, no2, no1);
+}
 void retiraAresta(TG *g, int no1, int no2) {
 	TG *p = buscaNo(g, no1);
 	TViz *ar = buscaAresta(g, no1, no2);

@@ -2,19 +2,23 @@
 #include <stdio.h>
 
 int menu(TG *grafo);
-TG *opcao(int opcao, TG *grafo);
+TG *opcao(int opcao, TG *grafo, int orient);
 TG *carregaArquivo(TG *grafo);
 
 int main(void){
 	int escolha;
 	TG *grafo = NULL;
 	grafo = carregaArquivo(grafo);
-	do
-	{
+	int orient = bothWays(grafo, grafo);
+	if (orient) {
+		printf("\nO grafo e nao orientado\n");
+	} else {
+		printf("\nO grafo e orientado\n");
+	} 
+	do {
 		escolha = menu(grafo);
-		grafo = opcao(escolha, grafo);
-		
-	}while(escolha);
+		grafo = opcao(escolha, grafo, orient);
+	} while(escolha);
 	
 	return 0;
 }
@@ -24,29 +28,18 @@ int menu(TG *grafo){
 	printf("\n---MENU---\n");
 	printf("0 - sair\n");
 	printf("1 - exibir\n");
-	printf("2 - adcionar no\n");
+	printf("2 - adicionar no\n");
 	printf("3 - retirar no\n");
 	printf("4 - buscar no\n");	
-	printf("5 - adcionar aresta\n");
+	printf("5 - adicionar aresta\n");
 	printf("6 - retirar aresta\n");	
 	printf("7 - busca aresta\n");
-	printf("8 - pintar grafo\n");
-	printf("9 - verificar orientacao\n");
-	if(grafo){
-		if(bothWays(grafo, grafo)){
-			printf("10 - verificar se e conexo\n");
-		} else {
-			printf("10 - verificar se e fortemente conexo\n");
-		}
-	} else {
-		printf("opcao 10 apenas apos construir um grafo\n");
-	}
 	printf("----------\nSelecione uma opcao\n");
 	scanf("%d", &opt);
 	return opt;
 }
 
-TG *opcao(int opcao, TG *grafo){
+TG *opcao(int opcao, TG *grafo, int orient){
 	int info;
 	int destino;
 	
@@ -89,7 +82,11 @@ TG *opcao(int opcao, TG *grafo){
 				printf("\n\nDesculpe, o no digitado nao foi encontrado =/");
 				break;
 			}
-			insereAresta(grafo, info, destino);
+			if (orient) {
+				insereArestaAmbosSentidos(grafo, info, destino);
+			} else {
+				insereAresta(grafo, info, destino);
+			}
 			break;
 		case 6:
 			printf("\n\nRetira aresta:\n \tdigita o no de onde sai a aresta: ");
@@ -104,7 +101,11 @@ TG *opcao(int opcao, TG *grafo){
 				printf("\n\nDesculpe, o no digitado nao foi encontrado =/");
 				break;
 			}
-			retiraAresta(grafo, info, destino);
+			if (orient) {
+				retiraArestaAmbosSentidos(grafo, info, destino);
+			} else {
+				retiraAresta(grafo, info, destino);
+			}
 			break;
 		case 7:
 			printf("\n\nBusca aresta aresta:\n \tdigita o no de onde sai a aresta: ");
@@ -121,26 +122,6 @@ TG *opcao(int opcao, TG *grafo){
 			}
 			imprimeAresta(buscaAresta(grafo, info, destino));
 			break;
-		case 8:
-			printf("\nColorindo grafo\n");
-			grafo = pintaGrafo(grafo, grafo, contaNos(grafo));
-			break;
-		case 9:
-			if(grafo){
-				if (bothWays(grafo, grafo)){
-					printf("\nO grafo e nao orientado\n");
-				} else {
-					printf("\nO grafo e orientado\n");
-				}
-			} else {
-				printf("\nNenhum grafo feito, consulte a opcao 'exibir' no menu\n");
-			}
-		case 10:
-			if(bothWays(grafo, grafo)){
-				//aqui é grafo conexo
-			}else {
-				//aqui é grafo fortemente conexo
-			}
 		default:
 			printf("\nOpcao nao encontrada");
 			break;
