@@ -8,6 +8,7 @@ TG *carregaArquivo(TG *grafo);
 int main(void){
 	int escolha;
 	TG *grafo = NULL;
+	grafo = carregaArquivo(grafo);
 	do
 	{
 		escolha = menu(grafo);
@@ -29,17 +30,16 @@ int menu(TG *grafo){
 	printf("5 - adcionar aresta\n");
 	printf("6 - retirar aresta\n");	
 	printf("7 - busca aresta\n");
-	printf("8 - carrega arquivo\n");
-	printf("9 - pintar grafo\n");
-	printf("10 - verificar orientacao\n");
+	printf("8 - pintar grafo\n");
+	printf("9 - verificar orientacao\n");
 	if(grafo){
 		if(bothWays(grafo, grafo)){
-			printf("11 - verificar se e conexo\n");
+			printf("10 - verificar se e conexo\n");
 		} else {
-			printf("11 - verificar se e fortemente conexo\n");
+			printf("10 - verificar se e fortemente conexo\n");
 		}
 	} else {
-		printf("opcao 11 apenas apos construir um grafo\n");
+		printf("opcao 10 apenas apos construir um grafo\n");
 	}
 	printf("----------\nSelecione uma opcao\n");
 	scanf("%d", &opt);
@@ -122,14 +122,10 @@ TG *opcao(int opcao, TG *grafo){
 			imprimeAresta(buscaAresta(grafo, info, destino));
 			break;
 		case 8:
-			printf("\n\nCarregando arquivo\n");
-			grafo = carregaArquivo(grafo);
-			break;
-		case 9:
 			printf("\nColorindo grafo\n");
 			grafo = pintaGrafo(grafo, grafo, contaNos(grafo));
 			break;
-		case 10:
+		case 9:
 			if(grafo){
 				if (bothWays(grafo, grafo)){
 					printf("\nO grafo e nao orientado\n");
@@ -139,11 +135,11 @@ TG *opcao(int opcao, TG *grafo){
 			} else {
 				printf("\nNenhum grafo feito, consulte a opcao 'exibir' no menu\n");
 			}
-		case 11:
+		case 10:
 			if(bothWays(grafo, grafo)){
-				
+				//aqui é grafo conexo
 			}else {
-				
+				//aqui é grafo fortemente conexo
 			}
 		default:
 			printf("\nOpcao nao encontrada");
@@ -154,6 +150,7 @@ TG *opcao(int opcao, TG *grafo){
 
 TG *carregaArquivo(TG *grafo){
 	FILE *arq = fopen("exemplo_EDI.txt", "r");
+	
 	if (arq != NULL){
 		int qtdNo;
 		fscanf(arq,"%d", &qtdNo);
