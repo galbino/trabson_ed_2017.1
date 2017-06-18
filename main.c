@@ -154,9 +154,10 @@ TG *carregaArquivo(TG *grafo){
 	if (arq != NULL){
 		int qtdNo;
 		fscanf(arq,"%d", &qtdNo);
+		printf("Carregando arquivo:\n");
 		printf("\nQuantidade de nos: %d\n", qtdNo);
 		int i;
-		for(i = qtdNo; i > 0 ; i--){
+		for(i = 1; i <= qtdNo ; i++){
 			grafo = insereNo(grafo, i);
 		}
 		
