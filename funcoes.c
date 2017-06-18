@@ -26,6 +26,7 @@ TG *retiraNo(TG *g, int no){
 	TG *p = buscaNo(g, no);
 	if (!p) return g;
 	if (p->ant) p->ant->prox = p->prox;
+	else g = p->prox;
 	if (p->prox) p->prox->ant = p->ant;
 	liberaNo(g, p);
 	return g;
@@ -90,12 +91,11 @@ void imprimeGrafo(TG *g){
 }
 void liberaNo(TG *g, TG *p) {
 	TViz *ant = p->viz, *prox;
-	while (ant->prox_viz) {
+	while (ant) {
 		prox = ant->prox_viz;
 		retiraArestaAmbosSentidos(g, p->id_grafo, ant->id);
 		ant = prox;
 	}
-	retiraArestaAmbosSentidos(g, p->id_grafo, ant->id);
 	free(p);
 }
 void libera(TG *g){
