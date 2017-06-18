@@ -53,12 +53,16 @@ void insereAresta(TG *g, int no1, int no2){
 	p->viz = novaAresta;
 }
 void retiraAresta(TG *g, int no1, int no2) {
+	TG *p = buscaNo(g, no1);
 	TViz *ar = buscaAresta(g, no1, no2);
 	if(!ar) return;
 	if (ar->viz_ant) ar->viz_ant->prox_viz = ar->prox_viz;
+	else p->viz = ar->prox_viz;
 	if (ar->prox_viz) ar->prox_viz->viz_ant = ar->viz_ant;
+	free(ar);
 }
 void retiraArestaAmbosSentidos(TG *g, int no1, int no2){
+	printf("%d %d\n", no1, no2);
 	retiraAresta(g, no1, no2);
 	retiraAresta(g, no2, no1);
 }
@@ -86,13 +90,12 @@ void imprimeGrafo(TG *g){
 }
 void liberaNo(TG *g, TG *p) {
 	TViz *ant = p->viz, *prox;
-	while (p && ant->prox_viz) {
+	while (ant->prox_viz) {
 		prox = ant->prox_viz;
 		retiraArestaAmbosSentidos(g, p->id_grafo, ant->id);
-		free(ant);
 		ant = prox;
 	}
-	free(ant);
+	retiraArestaAmbosSentidos(g, p->id_grafo, ant->id);
 	free(p);
 }
 void libera(TG *g){
