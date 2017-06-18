@@ -1,7 +1,7 @@
 #include "grafos.h"
 #include <stdio.h>
 
-int menu(TG *grafo);
+int menu(void);
 TG *opcao(int opcao, TG *grafo);
 TG *carregaArquivo(TG *grafo);
 
@@ -15,14 +15,14 @@ int main(void){
 		printf("\nO grafo e orientado\n");
 	} 
 	do {
-		escolha = menu(grafo);
+		escolha = menu();
 		grafo = opcao(escolha, grafo);
 	} while(escolha);
 	
 	return 0;
 }
 
-int menu(TG *grafo){
+int menu(void){
 	int opt;
 	printf("\n---MENU---\n");
 	printf("0 - sair\n");
