@@ -14,6 +14,7 @@ int main(void){
 	} else {
 		printf("\nO grafo e orientado\n");
 	} 
+	printf("%d", procuraCaminho(grafo, buscaNo(grafo, 3), 2));
 	do {
 		escolha = menu(grafo);
 		grafo = opcao(escolha, grafo);
@@ -25,15 +26,24 @@ int main(void){
 int menu(TG *grafo){
 	int opt;
 	printf("\n---MENU---\n");
-	printf("0 - sair\n");
-	printf("1 - exibir\n");
-	printf("2 - adicionar no\n");
-	printf("3 - retirar no\n");
-	printf("4 - buscar no\n");	
-	printf("5 - adicionar aresta\n");
-	printf("6 - retirar aresta\n");	
-	printf("7 - busca aresta\n");
-	printf("8 - e orientado?\n");
+	printf("0 - Sair\n");
+	printf("1 - Exibir\n");
+	printf("2 - Adicionar no\n");
+	printf("3 - Retirar no\n");
+	printf("4 - Buscar no\n");	
+	printf("5 - Adicionar aresta\n");
+	printf("6 - Retirar aresta\n");	
+	printf("7 - Busca aresta\n");
+	printf("8 - Eh orientado?\n");
+	if (!bothWays(grafo, grafo)) {
+		printf("9 - Eh fortemente conexo?\n");
+	} else {
+		printf("9 - Eh conexo?\n");
+		if (verificarConectividade(grafo) == 1) {
+		 	printf("10 - Pontes\n");
+		 	printf("11 - Articulacoes\n");
+		}
+	}
 	printf("----------\nSelecione uma opcao\n");
 	scanf("%d", &opt);
 	return opt;
@@ -121,6 +131,30 @@ TG *opcao(int opcao, TG *grafo){
 				printf("\nO grafo e orientado\n");
 			}
 			break;
+		case 9:
+			if (!bothWays(grafo, grafo)) {
+				if (fortementeConexo(grafo)){
+					printf("\nE fortemente conexo!");
+				} else {
+					printf("\nNao e fortemente conexo!");
+				}
+			} else {
+				if (verificarConectividade(grafo) == 1) {
+					printf("\nO grafo e conexo!");
+				} else {
+					printf("\nO grafo nao e conexo!");
+				}
+			}
+			break;
+		case 10:
+			if (bothWays(grafo, grafo) && verificarConectividade(grafo) == 1) {
+				encontrarPontes(grafo);
+				break;
+			}
+		case 11:
+			if (bothWays(grafo, grafo) && verificarConectividade(grafo) == 1) {
+				break;
+			}
 		default:
 			printf("\nOpcao nao encontrada");
 			break;

@@ -27,6 +27,7 @@ void imprimeNo(TG *g);
 void imprimeGrafo(TG *g);
 void liberaNo(TG *g, TG *p);
 void libera(TG *g);
+TG *copia(TG *g);
 
 TG *pintaGrafo(TG *grafo, TG *grafoAux, int qtdNos);
 int semConflito(TG *grafoInicio, TG *grafo, int cor);
@@ -38,3 +39,8 @@ int procuraCaminho(TG *grafoInicio, TG *grafo, int destino);
 void pintarGrafoDesconexos(TG *grafoInicio);
 void resetaCores(TG *grafoInicio);
 void resetaCaminho(TG *grafoInicio);
+
+int fortementeConexo(TG *g);
+int verificarConectividade(TG *g);
+void encontrarPontoArticulacao(TG *g);
+void encontrarPontes(TG *g);

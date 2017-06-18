@@ -75,7 +75,6 @@ void removeArestaConectada(TG *g, int no) {
 	removeArestaConectada(g->prox, no);
 }
 void retiraArestaAmbosSentidos(TG *g, int no1, int no2){
-	printf("%d %d\n", no1, no2);
 	retiraAresta(g, no1, no2);
 	retiraAresta(g, no2, no1);
 }
@@ -118,6 +117,25 @@ void libera(TG *g){
 	if(!g) return;	
 	retiraNo(g, g->id_grafo);
 	libera(g->prox);
+}
+
+TG *copia(TG *g) {
+	TG *q = g;
+	TG *p = NULL;
+	while (q) {
+		TG *p = insereNo(p, q->id_grafo);
+		q = q->prox;
+	}
+	q = g;
+	while (q){
+		TViz *viz = q->viz;
+		while (viz) {
+			insereAresta(p, q->id_grafo, viz->id);
+			viz = viz->prox_viz;
+		}
+		q = q->prox;
+	}
+	return p;
 }
 
 TG *pintaGrafo(TG *grafo, TG *grafoAux, int qtdNos){
@@ -200,7 +218,7 @@ int procuraCaminho(TG *grafoInicio, TG *grafo, int destino){
 		if(!buscaNo(grafoInicio, aresta->id)->jaPassou){
 			return procuraCaminho(grafoInicio, buscaNo(grafoInicio, aresta->id), destino);
 		}
-		aresta = aresta->prox_viz;		
+		aresta = aresta->prox_viz;
 	}
 	grafo->jaPassou = 0;
 	return 0;
@@ -252,10 +270,58 @@ void resetaCaminho(TG *grafoInicio){
 }
 
 
+int fortementeConexo(TG *g) {
+	TG *p = g;
+	while (p) {
+		TG *q = p->prox;
+		while (q) {
+			if (!procuraCaminho(g, p, q->id_grafo)) {
+				return 0;
+			}
+			resetaCaminho(g);
+			q = q->prox;
+		}
+		p = p->prox;
+	}
+	return 1;
+}
 
-
-
-
+int verificarConectividade(TG *g) {
+	int maior = 0;
+	pintarGrafoDesconexos(g);
+	TG *p = g;
+	while (p) {
+		if (maior < p->cor) {
+			maior = p->cor;
+		}
+		p = p->prox;
+	}
+	resetaCores(g);
+	return maior;
+}
+void encontrarPontoArticulacao(TG *g) {
+	TG *p = copia(g);
+	libera(p);
+}
+void encontrarPontes(TG *g) {
+	TG *q = copia(g);
+	TG *p = g;
+	TViz *viz = NULL;
+	int id1, id2;
+	while(p){
+		viz = p->viz;
+		while (viz != p->viz) {
+			id1 = p->id_grafo;
+			id2 = viz->id;
+			retiraArestaAmbosSentidos(q, id1, id2);
+			pintarGrafoDesconexos(q);
+			if (verificarConectividade(q) > 1) printf("A aresta %d -> %d eh uma ponte.", id1, id2);
+			insereArestaAmbosSentidos(q, id1, id2);
+			viz = viz->prox_viz;
+		}
+		p = p->prox;
+	}
+}
 
 
 
