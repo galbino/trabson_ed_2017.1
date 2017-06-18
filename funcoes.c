@@ -157,6 +157,25 @@ int contaNos(TG *grafo){
 	return qtdNos;	
 }
 
+int bothWays(TG *grafoInicio, TG *grafo){
+	if (!grafo){
+		return 1; //sim, todos os arcos vão e voltam;
+	}
+	TViz *aresta = grafo->viz;
+	while(aresta){
+		if(!buscaAresta(grafoInicio, aresta->id, aresta->id_pai)){
+			return 0;
+		}
+		aresta = aresta->prox_viz;
+	}
+	return bothWays(grafoInicio, grafo->prox);
+}
+
+
+
+
+
+
 
 
 

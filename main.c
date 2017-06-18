@@ -1,7 +1,7 @@
 #include "grafos.h"
 #include <stdio.h>
 
-int menu(void);
+int menu(TG *grafo);
 TG *opcao(int opcao, TG *grafo);
 TG *carregaArquivo(TG *grafo);
 
@@ -10,7 +10,7 @@ int main(void){
 	TG *grafo = NULL;
 	do
 	{
-		escolha = menu();
+		escolha = menu(grafo);
 		grafo = opcao(escolha, grafo);
 		
 	}while(escolha);
@@ -18,7 +18,7 @@ int main(void){
 	return 0;
 }
 
-int menu(){
+int menu(TG *grafo){
 	int opt;
 	printf("\n---MENU---\n");
 	printf("0 - sair\n");
@@ -31,7 +31,17 @@ int menu(){
 	printf("7 - busca aresta\n");
 	printf("8 - carrega arquivo\n");
 	printf("9 - pintar grafo\n");
-	printf("----\nSelecione uma opcao\n");
+	printf("10 - verificar orientacao\n");
+	if(grafo){
+		if(bothWays(grafo, grafo)){
+			printf("11 - verificar se e conexo\n");
+		} else {
+			printf("11 - verificar se e fortemente conexo\n");
+		}
+	} else {
+		printf("opcao 11 apenas apos construir um grafo\n");
+	}
+	printf("----------\nSelecione uma opcao\n");
 	scanf("%d", &opt);
 	return opt;
 }
@@ -100,13 +110,13 @@ TG *opcao(int opcao, TG *grafo){
 			printf("\n\nBusca aresta aresta:\n \tdigita o no de onde sai a aresta: ");
 			scanf("%d", &info);
 			if(!buscaNo(grafo, info)){
-				printf("\n\nDesculpe, o no digitado não foi encontrado =/");
+				printf("\n\nDesculpe, o no digitado nao foi encontrado =/");
 				break;
 			}
 			printf("\n \tdigite o no para onde a aresta aponta: ");
 			scanf("%d",&destino);
 			if(!buscaNo(grafo, destino)){
-				printf("\n\nDesculpe, o no digitado não foi encontrado =/");
+				printf("\n\nDesculpe, o no digitado nao foi encontrado =/");
 				break;
 			}
 			imprimeAresta(buscaAresta(grafo, info, destino));
@@ -119,8 +129,24 @@ TG *opcao(int opcao, TG *grafo){
 			printf("\nColorindo grafo\n");
 			grafo = pintaGrafo(grafo, grafo, contaNos(grafo));
 			break;
+		case 10:
+			if(grafo){
+				if (bothWays(grafo, grafo)){
+					printf("\nO grafo e nao orientado\n");
+				} else {
+					printf("\nO grafo e orientado\n");
+				}
+			} else {
+				printf("\nNenhum grafo feito, consulte a opcao 'exibir' no menu\n");
+			}
+		case 11:
+			if(bothWays(grafo, grafo)){
+				
+			}else {
+				
+			}
 		default:
-			printf("\nOpcao não encontrada");
+			printf("\nOpcao nao encontrada");
 			break;
 	}
 	return grafo;

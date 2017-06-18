@@ -29,3 +29,5 @@ void libera(TG *g);
 TG *pintaGrafo(TG *grafo, TG *grafoAux, int qtdNos);
 int semConflito(TG *grafoInicio, TG *grafo, int cor);
 int contaNos(TG *grafo);
+
+int bothWays(TG *grafoInicio, TG *grafo);
