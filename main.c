@@ -2,22 +2,21 @@
 #include <stdio.h>
 
 int menu(TG *grafo);
-TG *opcao(int opcao, TG *grafo, int orient);
+TG *opcao(int opcao, TG *grafo);
 TG *carregaArquivo(TG *grafo);
 
 int main(void){
 	int escolha;
 	TG *grafo = NULL;
 	grafo = carregaArquivo(grafo);
-	int orient = bothWays(grafo, grafo);
-	if (orient) {
+	if (bothWays(grafo, grafo)) {
 		printf("\nO grafo e nao orientado\n");
 	} else {
 		printf("\nO grafo e orientado\n");
 	} 
 	do {
 		escolha = menu(grafo);
-		grafo = opcao(escolha, grafo, orient);
+		grafo = opcao(escolha, grafo);
 	} while(escolha);
 	
 	return 0;
@@ -34,12 +33,13 @@ int menu(TG *grafo){
 	printf("5 - adicionar aresta\n");
 	printf("6 - retirar aresta\n");	
 	printf("7 - busca aresta\n");
+	printf("8 - e orientado?\n");
 	printf("----------\nSelecione uma opcao\n");
 	scanf("%d", &opt);
 	return opt;
 }
 
-TG *opcao(int opcao, TG *grafo, int orient){
+TG *opcao(int opcao, TG *grafo){
 	int info;
 	int destino;
 	
@@ -82,11 +82,7 @@ TG *opcao(int opcao, TG *grafo, int orient){
 				printf("\n\nDesculpe, o no digitado nao foi encontrado =/");
 				break;
 			}
-			if (orient) {
-				insereArestaAmbosSentidos(grafo, info, destino);
-			} else {
-				insereAresta(grafo, info, destino);
-			}
+			insereAresta(grafo, info, destino);
 			break;
 		case 6:
 			printf("\n\nRetira aresta:\n \tdigita o no de onde sai a aresta: ");
@@ -101,11 +97,7 @@ TG *opcao(int opcao, TG *grafo, int orient){
 				printf("\n\nDesculpe, o no digitado nao foi encontrado =/");
 				break;
 			}
-			if (orient) {
-				retiraArestaAmbosSentidos(grafo, info, destino);
-			} else {
-				retiraAresta(grafo, info, destino);
-			}
+			retiraAresta(grafo, info, destino);
 			break;
 		case 7:
 			printf("\n\nBusca aresta aresta:\n \tdigita o no de onde sai a aresta: ");
@@ -121,7 +113,13 @@ TG *opcao(int opcao, TG *grafo, int orient){
 				break;
 			}
 			imprimeAresta(buscaAresta(grafo, info, destino));
-			break;
+			break;	
+		case 8:
+			if (bothWays(grafo, grafo)) {
+				printf("\nO grafo e nao orientado\n");
+			} else {
+				printf("\nO grafo e orientado\n");
+			} 
 		default:
 			printf("\nOpcao nao encontrada");
 			break;
