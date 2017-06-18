@@ -37,3 +37,4 @@ int bothWays(TG *grafoInicio, TG *grafo);
 int procuraCaminho(TG *grafoInicio, TG *grafo, int destino);
 void pintarGrafoDesconexos(TG *grafoInicio);
 void resetaCores(TG *grafoInicio);
+void resetaCaminho(TG *grafoInicio);

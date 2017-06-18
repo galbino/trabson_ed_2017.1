@@ -220,6 +220,7 @@ void pintarGrafoDesconexos(TG *grafoInicio){
 				if(procuraCaminho(grafoInicio, buscaNo(grafoInicio, grafoPercorre->id_grafo), grafoAux->id_grafo)) {
 					grafoAux->cor = grafoPercorre->cor;
 					achou = 1;
+					resetaCaminho(grafoInicio);
 				}
 			}				
 			grafoPercorre = grafoPercorre->prox;
@@ -238,6 +239,14 @@ void resetaCores(TG *grafoInicio){
 	TG *grafoAux = grafoInicio;
 	while(grafoAux){
 		grafoAux->cor = 0;
+		grafoAux = grafoAux->prox;
+	}
+}
+
+void resetaCaminho(TG *grafoInicio){
+	TG *grafoAux = grafoInicio;
+	while(grafoAux){
+		grafoAux->jaPassou = 0;
 		grafoAux = grafoAux->prox;
 	}
 }

@@ -1,7 +1,7 @@
 #include "grafos.h"
 #include <stdio.h>
 
-int menu(void);
+int menu(TG *grafo);
 TG *opcao(int opcao, TG *grafo);
 TG *carregaArquivo(TG *grafo);
 
@@ -15,14 +15,14 @@ int main(void){
 		printf("\nO grafo e orientado\n");
 	} 
 	do {
-		escolha = menu();
+		escolha = menu(grafo);
 		grafo = opcao(escolha, grafo);
 	} while(escolha);
 	
 	return 0;
 }
 
-int menu(void){
+int menu(TG *grafo){
 	int opt;
 	printf("\n---MENU---\n");
 	printf("0 - sair\n");
@@ -119,16 +119,6 @@ TG *opcao(int opcao, TG *grafo){
 				printf("\nO grafo e nao orientado\n");
 			} else {
 				printf("\nO grafo e orientado\n");
-			}
-			pintarGrafoDesconexos(grafo);
-			break;
-		case 9:
-			printf("\n\nAdicionar no:\n \tdigite a informcao do no: ");
-			scanf("%d", &info);
-			printf("\n\nAdicionar no:\n \tdigite a informcao do no: ");
-			scanf("%d", &destino);
-			if(procuraCaminho(grafo, buscaNo(grafo, info), destino)){
-				printf("\nCaminho encontrado");
 			}
 			break;
 		default:
