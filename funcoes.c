@@ -20,7 +20,6 @@ TG *insereNo(TG *g, int no) {
 	p->ant = NULL;
 	p->prox = g;
 	
-	p->jaPassou = 0;
 	
 	if (g) g->ant = p;
 	return p;
@@ -53,6 +52,9 @@ void insereAresta(TG *g, int no1, int no2){
 	novaAresta->prox_viz = p->viz;
 	novaAresta->viz_ant = NULL;
 	novaAresta->id_pai = p->id_grafo;
+	
+	novaAresta->jaPassou = 0;
+	
 	if (p->viz) p->viz->viz_ant = novaAresta;
 	p->viz = novaAresta;
 }
@@ -212,15 +214,14 @@ int procuraCaminho(TG *grafoInicio, TG *grafo, int destino){
 	if(grafo->id_grafo == destino){
 		return 1;
 	}
-	grafo->jaPassou = 1;
 	TViz *aresta = grafo->viz;
 	while(aresta){
-		if(!buscaNo(grafoInicio, aresta->id)->jaPassou){
+		if(!aresta->jaPassou){
+			aresta->jaPassou = 1;
 			return procuraCaminho(grafoInicio, buscaNo(grafoInicio, aresta->id), destino);
 		}
 		aresta = aresta->prox_viz;
 	}
-	grafo->jaPassou = 0;
 	return 0;
 }
 
@@ -264,7 +265,11 @@ void resetaCores(TG *grafoInicio){
 void resetaCaminho(TG *grafoInicio){
 	TG *grafoAux = grafoInicio;
 	while(grafoAux){
-		grafoAux->jaPassou = 0;
+		TViz *aresta = grafoAux->viz;
+		while(aresta){
+			aresta->jaPassou = 0;
+			aresta = aresta->prox_viz;
+		}
 		grafoAux = grafoAux->prox;
 	}
 }
@@ -276,6 +281,7 @@ int fortementeConexo(TG *g) {
 		TG *q = p->prox;
 		while (q) {
 			if (!procuraCaminho(g, p, q->id_grafo)) {
+				resetaCaminho(g);
 				return 0;
 			}
 			resetaCaminho(g);
@@ -296,7 +302,6 @@ int verificarConectividade(TG *g) {
 		}
 		p = p->prox;
 	}
-	resetaCores(g);
 	return maior;
 }
 void encontrarPontoArticulacao(TG *g) {

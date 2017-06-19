@@ -3,10 +3,10 @@ typedef struct viz {
 	int id_pai;
 	struct viz *prox_viz;
 	struct viz *viz_ant;
+	int jaPassou;
 }TViz;
 
 typedef struct grafo {
-	int jaPassou;
 	int id_grafo;
 	int cor;
 	TViz *viz;
