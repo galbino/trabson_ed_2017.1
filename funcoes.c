@@ -142,26 +142,6 @@ TG *copia(TG *g) {
 	return p;
 }
 
-TG *pintaGrafo(TG *grafo, TG *grafoAux, int qtdNos){
-	if(!grafo){
-		return grafo;
-	}
-	if(grafoAux){
-		int i;
-		for(i = 1; i <= qtdNos + 1; i++){
-			grafoAux->cor = i;
-			if(semConflito(grafo, grafoAux, i)){
-				return pintaGrafo(grafo, grafoAux->prox, qtdNos);
-			}
-			grafoAux->cor = 0;
-		}
-	} else {
-		imprimeGrafo(grafo);
-		printf("\nGrafo pintado:");
-		return grafo;
-	}
-}
-
 int semConflito(TG *grafoInicio, TG *grafo, int cor){
 	TViz *aresta = grafo->viz;
 	while(aresta){
@@ -328,7 +308,7 @@ void encontrarPontoArticulacao(TG *g) {
 void encontrarPontes(TG *g) {
 	TG *q = copia(g);
 	TG *p = g;
-	TViz *viz = NULL, *vizP = NULL;
+	TViz *viz = NULL;
 	int id1, id2;
 	while(p){
 		viz = p->viz;
