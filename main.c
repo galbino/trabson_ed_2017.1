@@ -15,6 +15,7 @@ int main(void){
 		printf("\nO grafo e orientado\n");
 	}	
 	do {
+		pintarGrafoDesconexos(grafo);
 		escolha = menu(grafo);
 		grafo = opcao(escolha, grafo);
 	} while(escolha);
