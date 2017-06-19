@@ -13,8 +13,7 @@ int main(void){
 		printf("\nO grafo e nao orientado\n");
 	} else {
 		printf("\nO grafo e orientado\n");
-	} 
-	printf("%d", procuraCaminho(grafo, buscaNo(grafo, 3), 2));
+	}	
 	do {
 		escolha = menu(grafo);
 		grafo = opcao(escolha, grafo);
@@ -153,6 +152,7 @@ TG *opcao(int opcao, TG *grafo){
 			}
 		case 11:
 			if (bothWays(grafo, grafo) && verificarConectividade(grafo) == 1) {
+				encontrarPontoArticulacao(grafo);
 				break;
 			}
 		default:

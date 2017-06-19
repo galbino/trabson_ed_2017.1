@@ -19,9 +19,8 @@ TG *insereNo(TG *g, int no) {
 	p->viz = NULL;
 	p->ant = NULL;
 	p->prox = g;
-	
-	
 	if (g) g->ant = p;
+	resetaCores(g);
 	return p;
 }
 TG *retiraNo(TG *g, int no){
@@ -31,6 +30,7 @@ TG *retiraNo(TG *g, int no){
 	else g = p->prox;
 	if (p->prox) p->prox->ant = p->ant;
 	liberaNo(g, p);
+	resetaCores(g);
 	return g;
 }
 TViz *buscaAresta(TG *g, int no1, int no2) {
@@ -57,6 +57,7 @@ void insereAresta(TG *g, int no1, int no2){
 	
 	if (p->viz) p->viz->viz_ant = novaAresta;
 	p->viz = novaAresta;
+	resetaCores(g);
 }
 void insereArestaAmbosSentidos(TG *g, int no1, int no2){
 	insereAresta(g, no1, no2);
@@ -70,6 +71,7 @@ void retiraAresta(TG *g, int no1, int no2) {
 	else p->viz = ar->prox_viz;
 	if (ar->prox_viz) ar->prox_viz->viz_ant = ar->viz_ant;
 	free(ar);
+	resetaCores(g);
 }
 void removeArestaConectada(TG *g, int no) {
 	if (!g) return;
@@ -125,7 +127,7 @@ TG *copia(TG *g) {
 	TG *q = g;
 	TG *p = NULL;
 	while (q) {
-		TG *p = insereNo(p, q->id_grafo);
+		p = insereNo(p, q->id_grafo);
 		q = q->prox;
 	}
 	q = g;
@@ -306,26 +308,43 @@ int verificarConectividade(TG *g) {
 }
 void encontrarPontoArticulacao(TG *g) {
 	TG *p = copia(g);
+	TG *q = g;
+	TViz *viz = NULL;
+	while (p && q) {
+		p = retiraNo(p, q->id_grafo);
+		int t = verificarConectividade(p);
+		//if (t != 1) printf("O no %d eh um ponto de articulacao.\n", q->id_grafo);
+		imprimeGrafo(p);
+		p = insereNo(p, q->id_grafo);
+		viz = q->viz;
+		while (viz) {
+			insereArestaAmbosSentidos(p, q->id_grafo, viz->id);
+			viz = viz->prox_viz;
+		}
+		q = q->prox;
+	}
 	libera(p);
 }
 void encontrarPontes(TG *g) {
 	TG *q = copia(g);
 	TG *p = g;
-	TViz *viz = NULL;
+	TViz *viz = NULL, *vizP = NULL;
 	int id1, id2;
 	while(p){
 		viz = p->viz;
-		while (viz != p->viz) {
+		while (viz) {
 			id1 = p->id_grafo;
 			id2 = viz->id;
 			retiraArestaAmbosSentidos(q, id1, id2);
 			pintarGrafoDesconexos(q);
-			if (verificarConectividade(q) > 1) printf("A aresta %d -> %d eh uma ponte.", id1, id2);
+			imprimeGrafo(q);
+			if (verificarConectividade(q) > 1) printf("A aresta %d -> %d eh uma ponte.\n", id1, id2);
 			insereArestaAmbosSentidos(q, id1, id2);
 			viz = viz->prox_viz;
 		}
 		p = p->prox;
 	}
+	libera(q);
 }
 
 
