@@ -214,7 +214,7 @@ int bothWays(TG *grafoInicio, TG *grafo){
 
 int procuraCaminho(TG *grafoInicio, TG *grafo, int destino, int resp){
 	if(grafo->id_grafo == destino){
-		resp = 1;
+		return 1;
 	}
 	TViz *aresta = grafo->viz;
 	while(aresta){
@@ -231,14 +231,16 @@ void pintarGrafoDesconexos(TG *grafoInicio){
 	TG *grafoPercorre = grafoInicio;
 	TG *grafoAux = grafoInicio;
 	resetaCores(grafoInicio);
+	resetaCaminho(grafoInicio);
 	
 	int cor = 1;
 	while(grafoAux){
 		
+		grafoPercorre = grafoInicio;
 		int achou = 0;
 		while(grafoPercorre){
 			if(grafoPercorre->cor){
-				if(procuraCaminho(grafoInicio, buscaNo(grafoInicio, grafoAux->id_grafo), grafoPercorre->id_grafo, 0) || procuraCaminho(grafoInicio, buscaNo(grafoInicio, grafoPercorre->id_grafo), grafoAux->id_grafo, 0) ) {
+				if(procuraCaminho(grafoInicio, grafoPercorre, grafoAux->id_grafo, 0)) {
 					grafoAux->cor = grafoPercorre->cor;
 					achou = 1;
 					resetaCaminho(grafoInicio);
@@ -251,7 +253,6 @@ void pintarGrafoDesconexos(TG *grafoInicio){
 			cor++;
 		}
 		
-		grafoPercorre = grafoInicio;
 		grafoAux = grafoAux->prox;
 	}
 }
