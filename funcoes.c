@@ -20,7 +20,7 @@ TG *insereNo(TG *g, int no) {
 	p->ant = NULL;
 	p->prox = g;
 	if (g) g->ant = p;
-	resetaCores(g);
+	pintarGrafoDesconexos(g);
 	return p;
 }
 TG *retiraNo(TG *g, int no){
@@ -30,7 +30,7 @@ TG *retiraNo(TG *g, int no){
 	else g = p->prox;
 	if (p->prox) p->prox->ant = p->ant;
 	liberaNo(g, p);
-	resetaCores(g);
+	pintarGrafoDesconexos(g);
 	return g;
 }
 TViz *buscaAresta(TG *g, int no1, int no2) {
@@ -57,7 +57,7 @@ void insereAresta(TG *g, int no1, int no2){
 	
 	if (p->viz) p->viz->viz_ant = novaAresta;
 	p->viz = novaAresta;
-	resetaCores(g);
+	pintarGrafoDesconexos(g);
 }
 void insereArestaAmbosSentidos(TG *g, int no1, int no2){
 	insereAresta(g, no1, no2);
@@ -71,7 +71,7 @@ void retiraAresta(TG *g, int no1, int no2) {
 	else p->viz = ar->prox_viz;
 	if (ar->prox_viz) ar->prox_viz->viz_ant = ar->viz_ant;
 	free(ar);
-	resetaCores(g);
+	pintarGrafoDesconexos(g);
 }
 void removeArestaConectada(TG *g, int no) {
 	if (!g) return;
