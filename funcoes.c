@@ -20,7 +20,7 @@ TG *insereNo(TG *g, int no) {
 	p->ant = NULL;
 	p->prox = g;
 	if (g) g->ant = p;
-	pintarGrafoDesconexos(g);
+	resetaCores(g);
 	return p;
 }
 TG *retiraNo(TG *g, int no){
@@ -30,7 +30,7 @@ TG *retiraNo(TG *g, int no){
 	else g = p->prox;
 	if (p->prox) p->prox->ant = p->ant;
 	liberaNo(g, p);
-	pintarGrafoDesconexos(g);
+	resetaCores(g);
 	return g;
 }
 TViz *buscaAresta(TG *g, int no1, int no2) {
@@ -57,7 +57,7 @@ void insereAresta(TG *g, int no1, int no2){
 	
 	if (p->viz) p->viz->viz_ant = novaAresta;
 	p->viz = novaAresta;
-	pintarGrafoDesconexos(g);
+	resetaCores(g);
 }
 void insereArestaAmbosSentidos(TG *g, int no1, int no2){
 	insereAresta(g, no1, no2);
@@ -71,7 +71,7 @@ void retiraAresta(TG *g, int no1, int no2) {
 	else p->viz = ar->prox_viz;
 	if (ar->prox_viz) ar->prox_viz->viz_ant = ar->viz_ant;
 	free(ar);
-	pintarGrafoDesconexos(g);
+	resetaCores(g);
 }
 void removeArestaConectada(TG *g, int no) {
 	if (!g) return;
@@ -238,7 +238,7 @@ void pintarGrafoDesconexos(TG *grafoInicio){
 		int achou = 0;
 		while(grafoPercorre){
 			if(grafoPercorre->cor){
-				if(procuraCaminho(grafoInicio, buscaNo(grafoInicio, grafoAux->id_grafo), grafoPercorre->id_grafo, 0) ) {
+				if(procuraCaminho(grafoInicio, buscaNo(grafoInicio, grafoAux->id_grafo), grafoPercorre->id_grafo, 0) || procuraCaminho(grafoInicio, buscaNo(grafoInicio, grafoPercorre->id_grafo), grafoAux->id_grafo, 0) ) {
 					grafoAux->cor = grafoPercorre->cor;
 					achou = 1;
 					resetaCaminho(grafoInicio);
