@@ -313,7 +313,8 @@ void encontrarPontoArticulacao(TG *g) {
 	while (p && q) {
 		p = retiraNo(p, q->id_grafo);
 		int t = verificarConectividade(p);
-		//if (t != 1) printf("O no %d eh um ponto de articulacao.\n", q->id_grafo);
+		printf("%d", t);
+		if (t != 1) printf("O no %d eh um ponto de articulacao.\n", q->id_grafo);
 		imprimeGrafo(p);
 		p = insereNo(p, q->id_grafo);
 		viz = q->viz;
@@ -336,8 +337,6 @@ void encontrarPontes(TG *g) {
 			id1 = p->id_grafo;
 			id2 = viz->id;
 			retiraArestaAmbosSentidos(q, id1, id2);
-			pintarGrafoDesconexos(q);
-			imprimeGrafo(q);
 			if (verificarConectividade(q) > 1) printf("A aresta %d -> %d eh uma ponte.\n", id1, id2);
 			insereArestaAmbosSentidos(q, id1, id2);
 			viz = viz->prox_viz;
