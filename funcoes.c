@@ -313,9 +313,7 @@ void encontrarPontoArticulacao(TG *g) {
 	while (p && q) {
 		p = retiraNo(p, q->id_grafo);
 		int t = verificarConectividade(p);
-		printf("%d", t);
 		if (t != 1) printf("O no %d eh um ponto de articulacao.\n", q->id_grafo);
-		imprimeGrafo(p);
 		p = insereNo(p, q->id_grafo);
 		viz = q->viz;
 		while (viz) {
