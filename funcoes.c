@@ -204,6 +204,23 @@ int procuraCaminho(TG *grafoInicio, TG *grafo, int destino, int resp){
 		}
 		aresta = aresta->prox_viz;
 	}
+	TG *grafoAux = grafoInicio;
+	
+	while(grafoAux){
+		TViz *aresta = grafoAux->viz;
+		while(aresta){
+			if(aresta->id == grafo->id_grafo && !aresta->jaPassou){
+				aresta->jaPassou = 1;
+				resp = procuraCaminho(grafoInicio, buscaNo(grafoInicio, aresta->id_pai), destino, resp);
+			}
+			
+			aresta = aresta->prox_viz;
+		}
+		
+		grafoAux = grafoAux->prox;
+	}
+	
+	
 	return resp;
 }
 
