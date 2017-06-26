@@ -255,10 +255,10 @@ void pintarGrafoDesconexos(TG *grafoInicio){
 				if(procuraCaminho(grafoInicio, grafoPercorre, grafoAux->id_grafo, 0)) {
 					grafoAux->cor = grafoPercorre->cor;
 					achou = 1;
-					resetaCaminho(grafoInicio);
 				}
 			}				
 			grafoPercorre = grafoPercorre->prox;
+			resetaCaminho(grafoInicio);
 		}
 		if(!achou){
 			grafoAux->cor = cor;
