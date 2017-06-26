@@ -224,6 +224,21 @@ int procuraCaminho(TG *grafoInicio, TG *grafo, int destino, int resp){
 	return resp;
 }
 
+int procuraCaminhoFortemente(TG *grafoInicio, TG *grafo, int destino, int resp){
+	if(grafo->id_grafo == destino){
+		return 1;
+	}
+	TViz *aresta = grafo->viz;
+	while(aresta){
+		if(!aresta->jaPassou){
+			aresta->jaPassou = 1;
+			resp = procuraCaminho(grafoInicio, buscaNo(grafoInicio, aresta->id), destino, resp);
+		}
+		aresta = aresta->prox_viz;
+	}	
+	return resp;
+}
+
 void pintarGrafoDesconexos(TG *grafoInicio){
 	TG *grafoPercorre = grafoInicio;
 	TG *grafoAux = grafoInicio;
@@ -280,7 +295,7 @@ int fortementeConexo(TG *g) {
 	while (p) {
 		TG *q = p->prox;
 		while (q) {
-			if (!procuraCaminho(g, p, q->id_grafo, 0)) {
+			if (!procuraCaminhoFortemente(g, p, q->id_grafo, 0)) {
 				resetaCaminho(g);
 				return 0;
 			}
@@ -342,11 +357,26 @@ void encontrarPontes(TG *g) {
 	libera(q);
 }
 
-
-
-
-
-
+void encontrarPontosFortementeConexos(TG *g) {
+	TG *p = g, *q;
+	int x, y;
+	while (p) {
+		q = p->prox;
+		while (q) {
+			x = procuraCaminhoFortemente(g, p, q->id_grafo, 0);
+			resetaCaminho(g);
+			y = procuraCaminhoFortemente(g, q, p->id_grafo, 0);
+			resetaCaminho(g);
+			if (x) {
+				if (y) {
+					printf("\nOs nos %d e %d sao fortemente conexos.", p->id_grafo, q->id_grafo);
+				}
+			}
+			q = q->prox;
+		}
+		p = p->prox;
+	}
+}
 
 
 

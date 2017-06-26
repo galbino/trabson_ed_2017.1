@@ -36,6 +36,7 @@ int contaNos(TG *grafo);
 int bothWays(TG *grafoInicio, TG *grafo);
 
 int procuraCaminho(TG *grafoInicio, TG *grafo, int destino, int resp);
+int procuraCaminhoFortemente(TG *grafoInicio, TG *grafo, int destino, int resp);
 void pintarGrafoDesconexos(TG *grafoInicio);
 void resetaCores(TG *grafoInicio);
 void resetaCaminho(TG *grafoInicio);
@@ -44,3 +45,4 @@ int fortementeConexo(TG *g);
 int verificarConectividade(TG *g);
 void encontrarPontoArticulacao(TG *g);
 void encontrarPontes(TG *g);
+void encontrarPontosFortementeConexos(TG *g);

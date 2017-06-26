@@ -134,9 +134,11 @@ TG *opcao(int opcao, TG *grafo){
 		case 9:
 			if (!bothWays(grafo, grafo)) {
 				if (fortementeConexo(grafo)){
-					printf("\nE fortemente conexo!");
+					printf("\nO grafo inteiro e fortemente conexo!");
+					encontrarPontosFortementeConexos(grafo);
 				} else {
-					printf("\nNao e fortemente conexo!");
+					printf("\nO grafo inteiro nao e fortemente conexo!");
+					encontrarPontosFortementeConexos(grafo);
 				}
 			} else {
 				if (verificarConectividade(grafo) == 1) {
