@@ -298,6 +298,11 @@ int fortementeConexo(TG *g) {
 			if (!procuraCaminhoFortemente(g, p, q->id_grafo, 0)) {
 				resetaCaminho(g);
 				return 0;
+			} 
+			resetaCaminho(g);
+			if (!procuraCaminhoFortemente(g, q, p->id_grafo, 0)) {
+				resetaCaminho(g);
+				return 0;
 			}
 			resetaCaminho(g);
 			q = q->prox;
@@ -356,10 +361,63 @@ void encontrarPontes(TG *g) {
 	}
 	libera(q);
 }
-
+TL **mallocList(int qntd) {
+	int  x;
+	TL **list = (TL **) malloc(sizeof(TL *) * qntd);
+	for (x = 0; x < qntd; x++) {
+		list[x] = NULL;
+	}
+	return list;
+}
+TL *buscaNum(TL *list, int x) {
+	if (!list) return NULL;
+	TL *p = list;
+	while (p && p->id != x) {
+		p = p->prox;
+	}
+	return p;
+}
+TL *insLis(TL *lis, int x) {
+	if (buscaNum(lis, x)) return lis;
+	TL *no = (TL *) malloc(sizeof(TL));
+	no->id = x;
+	if (lis) no->prox = lis;
+	else no->prox = NULL;
+	return no;
+}
+void liberaLis(TL *lis) {
+	TL *prox;
+	while (lis) {
+		prox = lis->prox;
+		free(lis);
+		lis = prox;
+	}
+}
+void liberaLisFull(TL **lis, int qntd) {
+	int x;
+	for (x = 0; x < qntd; x++) {
+		liberaLis(lis[x]);
+	}
+	free(lis);
+}
+void imprimeLis(TL *lis) {
+	printf("{");
+	while (lis) {
+		if (lis->prox) printf("%d,", lis->id);
+		else printf("%d", lis->id);
+		lis = lis->prox;
+	}
+	printf("}");
+}
 void encontrarPontosFortementeConexos(TG *g) {
 	TG *p = g, *q;
-	int x, y;
+	int x, y, num = 0, start = 0, qntd;
+	while (p) {
+		qntd++;
+		p = p->prox;
+	}
+	p = g;
+	TL **lis = mallocList(qntd);
 	while (p) {
 		q = p->prox;
 		while (q) {
@@ -367,15 +425,29 @@ void encontrarPontosFortementeConexos(TG *g) {
 			resetaCaminho(g);
 			y = procuraCaminhoFortemente(g, q, p->id_grafo, 0);
 			resetaCaminho(g);
-			if (x) {
-				if (y) {
-					printf("\nOs nos %d e %d sao fortemente conexos.", p->id_grafo, q->id_grafo);
-				}
+			if (x && y) {
+				lis[start] = insLis(lis[start], p->id_grafo);
+				lis[start] = insLis(lis[start], q->id_grafo);
+				num++;
 			}
 			q = q->prox;
 		}
-		p = p->prox;
+		if (!num) lis[start] = insLis(lis[start], p->id_grafo);
+		num = 0;
+		if (buscaNum(lis[start], p->id_grafo)) {
+			start++;
+			lis[start] = NULL;
+			while (p && buscaNum(lis[start-1], p->id_grafo)) {
+				p = p->prox;
+			}			
+		}
+		
 	}
+	int j = start;
+	for (start = 0; start < j; start++) {
+		imprimeLis(lis[start]);
+	}
+	liberaLisFull(lis, qntd);
 }
 
 

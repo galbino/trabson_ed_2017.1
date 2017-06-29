@@ -14,6 +14,11 @@ typedef struct grafo {
 	struct grafo *ant;
 }TG;
 
+typedef struct list {
+	int id;
+	struct list *prox;
+}TL;
+
 TG *buscaNo(TG *g, int no);
 TG *insereNo(TG *g, int no);
 TG *retiraNo(TG *g, int no);
@@ -45,4 +50,12 @@ int fortementeConexo(TG *g);
 int verificarConectividade(TG *g);
 void encontrarPontoArticulacao(TG *g);
 void encontrarPontes(TG *g);
+
+TL **mallocList(int qntd);
+TL *buscaNum(TL *list, int x);
+TL *insLis(TL *lis, int x);
+void liberaLis(TL *lis);
+void liberaLisFull(TL **lis, int qntd);
+void imprimeLis(TL *lis);
+
 void encontrarPontosFortementeConexos(TG *g);
