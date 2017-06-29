@@ -349,16 +349,19 @@ void encontrarPontes(TG *g) {
 	int id1, id2;
 	while(p){
 		viz = p->viz;
-		while (viz) {
+		while (viz && !viz->jaPassou) {
 			id1 = p->id_grafo;
 			id2 = viz->id;
 			retiraArestaAmbosSentidos(q, id1, id2);
 			if (verificarConectividade(q) > 1) printf("A aresta %d -> %d eh uma ponte.\n", id1, id2);
 			insereArestaAmbosSentidos(q, id1, id2);
+			viz->jaPassou = 1;
+			buscaAresta(g, id2, id1)->jaPassou = 1;
 			viz = viz->prox_viz;
 		}
 		p = p->prox;
 	}
+	resetaCaminho(g);
 	libera(q);
 }
 TL **mallocList(int qntd) {
