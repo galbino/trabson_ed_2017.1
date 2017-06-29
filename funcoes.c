@@ -232,7 +232,7 @@ int procuraCaminhoFortemente(TG *grafoInicio, TG *grafo, int destino, int resp){
 	while(aresta){
 		if(!aresta->jaPassou){
 			aresta->jaPassou = 1;
-			resp = procuraCaminho(grafoInicio, buscaNo(grafoInicio, aresta->id), destino, resp);
+			resp = procuraCaminhoFortemente(grafoInicio, buscaNo(grafoInicio, aresta->id), destino, resp);
 		}
 		aresta = aresta->prox_viz;
 	}	
