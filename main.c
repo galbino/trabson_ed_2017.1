@@ -160,10 +160,6 @@ TG *opcao(int opcao, TG *grafo){
 				encontrarPontoArticulacao(grafo);
 				break;
 			}
-		case 12:
-			if(procuraCaminho(grafo, buscaNo(grafo, 1), 2, 0)){
-				printf("\nCaminho encontrado");
-			}
 		default:
 			printf("\nOpcao nao encontrada");
 			break;

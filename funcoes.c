@@ -410,7 +410,7 @@ void imprimeLis(TL *lis) {
 		else printf("%d", lis->id);
 		lis = lis->prox;
 	}
-	printf("}");
+	printf("} ");
 }
 void encontrarPontosFortementeConexos(TG *g) {
 	TG *p = g, *q;
@@ -441,8 +441,7 @@ void encontrarPontosFortementeConexos(TG *g) {
 			start++;
 			lis[start] = NULL;
 			int k;
-			for(k = 1; k <= start; k++)
-			{
+			for(k = 1; k <= start; k++) {
 				while (p && buscaNum(lis[start-k], p->id_grafo)) {
 					p = p->prox;
 				}			
