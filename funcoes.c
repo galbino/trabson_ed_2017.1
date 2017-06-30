@@ -440,9 +440,13 @@ void encontrarPontosFortementeConexos(TG *g) {
 		if (buscaNum(lis[start], p->id_grafo)) {
 			start++;
 			lis[start] = NULL;
-			while (p && buscaNum(lis[start-1], p->id_grafo)) {
-				p = p->prox;
-			}			
+			int k;
+			for(k = 1; k <= start; k++)
+			{
+				while (p && buscaNum(lis[start-k], p->id_grafo)) {
+					p = p->prox;
+				}			
+			}
 		}
 		
 	}
